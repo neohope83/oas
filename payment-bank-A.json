@@ -5,7 +5,7 @@
     "title": "Open Banking Payment Initiation API",
     "description": "API for initiating and managing payment requests under Open Banking standards."
   },
-  "host": "api.openbanking.example.com",
+  "host": "api.openbanking.bank-a.com/payment",
   "basePath": "/v1",
   "schemes": ["https"],
   "paths": {

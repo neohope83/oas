@@ -5,7 +5,7 @@
     "title": "Open Banking Account Information API",
     "description": "API for accessing account information under Open Banking standards."
   },
-  "host": "api.openbanking.example.com",
+  "host": "api.openbanking.bank-b.com/account",
   "basePath": "/v1",
   "schemes": ["https"],
   "paths": {

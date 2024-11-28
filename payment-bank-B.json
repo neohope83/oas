@@ -1,0 +1,92 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Open Banking Payment Initiation API",
+    "description": "API for initiating and managing payment requests under Open Banking standards."
+  },
+  "host": "api.openbanking.bank-b.com/payment",
+  "basePath": "/v1",
+  "schemes": ["https"],
+  "paths": {
+    "/payments": {
+      "post": {
+        "summary": "Initiate a Payment",
+        "description": "Creates a new payment request.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Payment details",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "debtorAccount": {
+                  "type": "object",
+                  "properties": {
+                    "iban": { "type": "string" },
+                    "currency": { "type": "string" }
+                  }
+                },
+                "creditorAccount": {
+                  "type": "object",
+                  "properties": {
+                    "iban": { "type": "string" },
+                    "currency": { "type": "string" }
+                  }
+                },
+                "amount": { "type": "string" },
+                "currency": { "type": "string" },
+                "reference": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Payment successfully created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paymentId": { "type": "string" },
+                "status": { "type": "string" }
+              }
+            }
+          },
+          "400": { "description": "Invalid request data" }
+        }
+      }
+    },
+    "/payments/{paymentId}": {
+      "get": {
+        "summary": "Get Payment Status",
+        "description": "Retrieve the status of an existing payment.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payment status retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paymentId": { "type": "string" },
+                "status": { "type": "string" }
+              }
+            }
+          },
+          "404": { "description": "Payment not found" }
+        }
+      }
+    }
+  }
+}

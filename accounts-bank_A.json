@@ -1,0 +1,101 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Open Banking Account Information API",
+    "description": "API for accessing account information under Open Banking standards."
+  },
+  "host": "api.openbanking.bank-a.com/account",
+  "basePath": "/v1",
+  "schemes": ["https"],
+  "paths": {
+    "/accounts": {
+      "get": {
+        "summary": "Get Accounts",
+        "description": "Retrieve a list of accounts accessible to the user.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of accounts retrieved",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "accountId": { "type": "string" },
+                  "accountType": { "type": "string" },
+                  "currency": { "type": "string" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized access" }
+        }
+      }
+    },
+    "/accounts/{accountId}/transactions": {
+      "get": {
+        "summary": "Get Account Transactions",
+        "description": "Retrieve the transaction history for a specific account.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction history retrieved",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "transactionId": { "type": "string" },
+                  "date": { "type": "string", "format": "date" },
+                  "amount": { "type": "string" },
+                  "currency": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized access" },
+          "404": { "description": "Account not found" }
+        }
+      }
+    }
+  }
+}
